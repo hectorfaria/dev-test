@@ -49,11 +49,11 @@ jobs:
       - name: Load & Cache dependencies
         uses: ./.github/actions/cached-deps/
       - name: Check for vulnerabilities
-        run: npm run scan > scan-report.txt
+        run: npm run scan > scan-report.json
         id: scan-code
         shell: bash
       - name: Upload scan report
         uses: actions/upload-artifact@v3
         with:
           name: scan-report
-          path: scan-report.txt
+          path: scan-report.json
