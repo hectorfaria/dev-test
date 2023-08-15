@@ -35,7 +35,6 @@ jobs:
         id: coverage-test
         run: npm run coverage > test-report.txt
       - name: Upload test report
-        if: failure() && steps.coverage-test.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
@@ -51,7 +50,6 @@ jobs:
         run: npm run scan > scan-report.txt
         id: scan-code
       - name: Upload scan report
-        if: failure() && steps.scan-code.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: scan-report
