@@ -33,7 +33,7 @@ jobs:
         uses: ./.github/actions/cached-deps/
       - name: Coverage the tests
         id: coverage-test
-        run: echo npm run coverage > test-report.txt
+        run: npm run coverage > test-report.txt
       - name: Upload test report
         if: failure() && steps.coverage-test.outcome == 'failure'
         uses: actions/upload-artifact@v3
@@ -48,7 +48,7 @@ jobs:
       - name: Load & Cache dependencies
         uses: ./.github/actions/cached-deps/
       - name: Check for vulnerabilities
-        run: echo npm run scan > scan-report.txt
+        run: npm run scan > scan-report.txt
         id: scan-code
       - name: Upload scan report
         if: failure() && steps.scan-code.outcome == 'failure'
