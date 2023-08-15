@@ -1,0 +1,58 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - main
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Load & Cache dependencies
+        uses: ./.github/actions/cached-deps/
+      - name: Lint code
+        run: npm run lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Load & Cache dependencies
+        uses: ./.github/actions/cached-deps/
+      - name: Test Code
+        id: run-tests
+        run: npm run test
+  coverage:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Load & Cache dependencies
+        uses: ./.github/actions/cached-deps/
+      - name: Coverage the tests
+        id: coverage-test
+        run: npm run coverage
+      - name: Upload test report
+        if: failure() && steps.coverage-test.outcome == 'failure'
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test.json
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Load & Cache dependencies
+        uses: ./.github/actions/cached-deps/
+      - name: Check for vulnerabilities
+        run: npm run scan
+        id: scan-code
+      - name: Upload scan repport
+        if: failure() && steps.scan-code.outcome == 'failure'
+        uses: actions/upload-artifact@v3
+        with:
+          name: scan-report
+          path: scan.json
