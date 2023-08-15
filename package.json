@@ -8,7 +8,6 @@
     "start": "node index.js",
     "test": "jest",
     "lint": "eslint",
-    "scan": "npm audit -json",
     "coverage": "jest --coverage"
   },
   "jest": {
