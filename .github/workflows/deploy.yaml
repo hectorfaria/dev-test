@@ -34,9 +34,13 @@ jobs:
         uses: ./.github/actions/cached-deps/
       - name: Coverage the tests
         id: coverage-test
-        run: echo "coverage=$(npm run coverage)" >> $GITHUB_OUTPUT
-    outputs:
-      coverage: ${{ steps.coverage-test.outputs.coverage }}
+        run: npm run coverage > test-report.txt
+        shell: bash
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test-report.txt
   scan:
     runs-on: ubuntu-latest
     steps:
@@ -45,7 +49,11 @@ jobs:
       - name: Load & Cache dependencies
         uses: ./.github/actions/cached-deps/
       - name: Check for vulnerabilities
-        run: echo "scan=$(npm run scan)" >> $GITHUB_OUTPUT
+        run: npm run scan > scan-report.txt
         id: scan-code
-    outputs:
-        scan: ${{ steps.scan-code.outputs.scan }}
+        shell: bash
+      - name: Upload scan report
+        uses: actions/upload-artifact@v3
+        with:
+          name: scan-report
+          path: scan-report.txt
