@@ -32,11 +32,11 @@ jobs:
         uses: actions/checkout@v3
       - name: Load & Cache dependencies
         uses: ./.github/actions/cached-deps/
-      - name: Coverage the tests >> $GITHUB_OUTPUT
+      - name: Coverage the tests
         id: coverage-test
-        run: npm run coverage
+        run: echo "coverage=$(npm run coverage)" >> $GITHUB_OUTPUT
     outputs:
-      coverage: ${{ steps.coverage-test.outputs.* }}
+      coverage: ${{ steps.coverage-test.outputs.coverage }}
   scan:
     runs-on: ubuntu-latest
     steps:
@@ -45,7 +45,7 @@ jobs:
       - name: Load & Cache dependencies
         uses: ./.github/actions/cached-deps/
       - name: Check for vulnerabilities
-        run: npm run scan >> $GITHUB_OUTPUT
+        run: echo "scan=$(npm run scan)" >> $GITHUB_OUTPUT
         id: scan-code
     outputs:
-        scan: ${{ steps.scan-code.outputs.* }}
+        scan: ${{ steps.scan-code.outputs.scan }}
