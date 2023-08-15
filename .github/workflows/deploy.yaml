@@ -34,6 +34,7 @@ jobs:
       - name: Coverage the tests
         id: coverage-test
         run: npm run coverage > test-report.txt
+        shell: bash
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
@@ -49,6 +50,7 @@ jobs:
       - name: Check for vulnerabilities
         run: npm run scan > scan-report.txt
         id: scan-code
+        shell: bash
       - name: Upload scan report
         uses: actions/upload-artifact@v3
         with:
