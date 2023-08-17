@@ -64,3 +64,9 @@ variable "ingress" {
   default     = "dev-test-ingress"
   description = "The name of the Ingress for the service"
 }
+
+variable "host_name" {
+  type        = string
+  default     = "dev-test.com"
+  description = "The name of the hostname"
+}

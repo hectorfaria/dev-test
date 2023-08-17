@@ -65,7 +65,7 @@ resource "kubernetes_deployment" "dev-test-deploy" {
   }
 }
 
-resource "kubernetes_ingress_v1" "dev-test_ingress" {
+resource "kubernetes_ingress_v1" "dev-test-ingress" {
   metadata {
     name      = var.ingress
     namespace = var.namespace
@@ -73,6 +73,11 @@ resource "kubernetes_ingress_v1" "dev-test_ingress" {
   }
 
   spec {
+
+    tls {
+      secret_name = "dev-test-secret"
+      hosts       = ["${var.host_name}"]
+    }
     default_backend {
       service {
         name = var.service_name
@@ -83,7 +88,7 @@ resource "kubernetes_ingress_v1" "dev-test_ingress" {
     }
 
     rule {
-      host = "dev-test.com"
+      host = var.host_name
       http {
         path {
           backend {
@@ -139,3 +144,17 @@ resource "kubernetes_horizontal_pod_autoscaler" "dev-test-hpa" {
     }
   }
 }
+
+resource "kubernetes_secret" "dev-test-tls" {
+  metadata {
+    name      = "dev-test-secret"
+    namespace = var.namespace
+  }
+
+  data = {
+    "tls.crt" = tls_self_signed_cert.ca.cert_pem
+    "tls.key" = tls_self_signed_cert.ca.private_key_pem
+  }
+
+  type = "kubernetes.io/tls"
+}  
