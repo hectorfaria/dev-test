@@ -7,7 +7,6 @@ metadata:
     tier: backend
   name: dev-test-ingress
   namespace: dev-test-ns
-  resourceVersion: "37418"
 spec:
   defaultBackend:
     service:

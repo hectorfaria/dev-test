@@ -9,7 +9,6 @@ metadata:
     tier: backend
   name: dev-test-deploy
   namespace: dev-test-ns
-  resourceVersion: "41272"
 spec:
   progressDeadlineSeconds: 600
   replicas: 2

@@ -7,4 +7,3 @@ metadata:
     kubernetes.io/metadata.name: dev-test-ns
     tier: backend
   name: dev-test-ns
-  resourceVersion: "31341"

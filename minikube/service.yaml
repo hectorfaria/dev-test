@@ -6,7 +6,6 @@ metadata:
     tier: backend
   name: dev-test-srv
   namespace: dev-test-ns
-  resourceVersion: "31347"
 spec:
   clusterIP: 10.100.195.245
   clusterIPs:

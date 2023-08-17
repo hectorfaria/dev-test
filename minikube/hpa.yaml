@@ -6,7 +6,6 @@ metadata:
     tier: backend
   name: dev-test-hpa
   namespace: dev-test-ns
-  resourceVersion: "44852"
 spec:
   maxReplicas: 5
   metrics:
