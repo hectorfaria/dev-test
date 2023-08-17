@@ -70,3 +70,9 @@ variable "host_name" {
   default     = "dev-test.com"
   description = "The name of the hostname"
 }
+
+variable "tls_secret" {
+   type        = string
+  default     = "dev-test-secret"
+  description = "The name of the secret for hosting the self signed TLS certificate"
+}

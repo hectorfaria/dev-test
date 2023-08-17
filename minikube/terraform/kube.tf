@@ -33,13 +33,18 @@ resource "kubernetes_deployment" "dev-test-deploy" {
       }
 
       spec {
+        restart_policy = "Always"
         container {
           image = var.image_name
           name  = "dev-test"
           port {
             container_port = var.image_port
           }
-          /*        env {
+          env {
+           name = "DATABASE_USER"
+           value = "user"
+         }
+         env {
            name = "DATABASE_PASSWORD"
            value_from {
              secret_key_ref {
@@ -47,7 +52,7 @@ resource "kubernetes_deployment" "dev-test-deploy" {
                key = "password"
              }
            }
-         } */
+         } 
           resources {
             limits = {
               cpu    = "0.5"
@@ -75,7 +80,7 @@ resource "kubernetes_ingress_v1" "dev-test-ingress" {
   spec {
 
     tls {
-      secret_name = "dev-test-secret"
+      secret_name = var.tls_secret
       hosts       = ["${var.host_name}"]
     }
     default_backend {
@@ -147,7 +152,7 @@ resource "kubernetes_horizontal_pod_autoscaler" "dev-test-hpa" {
 
 resource "kubernetes_secret" "dev-test-tls" {
   metadata {
-    name      = "dev-test-secret"
+    name      = var.tls_secret
     namespace = var.namespace
   }
 
