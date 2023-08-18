@@ -41,18 +41,18 @@ resource "kubernetes_deployment" "dev-test-deploy" {
             container_port = var.image_port
           }
           env {
-           name = "DATABASE_USER"
-           value = "user"
-         }
-         env {
-           name = "DATABASE_PASSWORD"
-           value_from {
-             secret_key_ref {
-               name = "dev-test-pass"
-               key = "password"
-             }
-           }
-         } 
+            name  = "DATABASE_USER"
+            value = "user"
+          }
+          env {
+            name = "DATABASE_PASSWORD"
+            value_from {
+              secret_key_ref {
+                name = "dev-test-pass"
+                key  = "password"
+              }
+            }
+          }
           resources {
             limits = {
               cpu    = "0.5"
@@ -75,22 +75,17 @@ resource "kubernetes_ingress_v1" "dev-test-ingress" {
     name      = var.ingress
     namespace = var.namespace
     labels    = local.dev_test_labels
+     annotations = {
+      "kubernetes.io/ingress.class" = "nginx"
+    }
   }
 
   spec {
 
-    tls {
+    /* tls {
       secret_name = var.tls_secret
       hosts       = ["${var.host_name}"]
-    }
-    default_backend {
-      service {
-        name = var.service_name
-        port {
-          number = var.image_port
-        }
-      }
-    }
+    } */
 
     rule {
       host = var.host_name
@@ -119,11 +114,11 @@ resource "kubernetes_service" "dev-test-srv" {
     labels    = local.dev_test_labels
   }
   spec {
-    selector = local.dev_test_labels
+    selector         = local.dev_test_labels
+    session_affinity = "ClientIP"
     port {
       port        = var.image_port
       target_port = var.image_port
-      node_port   = var.node_port
     }
     type = "NodePort"
   }

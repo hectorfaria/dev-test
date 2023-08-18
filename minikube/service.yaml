@@ -7,11 +7,6 @@ metadata:
   name: dev-test-srv
   namespace: dev-test-ns
 spec:
-  clusterIP: 10.100.195.245
-  clusterIPs:
-  - 10.100.195.245
-  externalTrafficPolicy: Cluster
-  internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
   ipFamilyPolicy: SingleStack

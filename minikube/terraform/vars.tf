@@ -13,7 +13,7 @@ variable "image_port" {
 
 variable "node_port" {
   type        = number
-  default     = 32000
+  default     = 8000
   description = "The port the Service Node port is forwarding to"
 }
 
@@ -72,7 +72,7 @@ variable "host_name" {
 }
 
 variable "tls_secret" {
-   type        = string
+  type        = string
   default     = "dev-test-secret"
   description = "The name of the secret for hosting the self signed TLS certificate"
 }

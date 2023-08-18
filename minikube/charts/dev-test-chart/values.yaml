@@ -1,0 +1,11 @@
+replicaCount: 2
+image:
+ repository: hectorfaria/dev-test
+ pullPolicy: IfNotPresent
+
+ deployment:
+  name:  dev-test-deploy
+service:
+ name: dev-test-srv
+ type: NodePort
+ port: 8000
