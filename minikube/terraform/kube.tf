@@ -73,7 +73,7 @@ resource "kubernetes_ingress_v1" "dev-test-ingress" {
             service {
               name = var.service_name
               port {
-                number = var.image_port
+                number = var.node_port
               }
             }
           }
@@ -95,10 +95,10 @@ resource "kubernetes_service" "dev-test-srv" {
     selector         = local.dev_test_labels
     session_affinity = "ClientIP"
     port {
-      port        = var.image_port
+      port        = var.node_port
       target_port = var.image_port
     }
-    type = "NodePort"
+    type = "LoadBalancer"
   }
 }
 

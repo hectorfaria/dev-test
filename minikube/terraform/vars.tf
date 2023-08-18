@@ -13,7 +13,7 @@ variable "image_port" {
 
 variable "node_port" {
   type        = number
-  default     = 8000
+  default     = 80
   description = "The port the Service Node port is forwarding to"
 }
 
