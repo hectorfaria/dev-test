@@ -63,14 +63,14 @@ resource "kubernetes_ingress_v1" "dev-test-ingress" {
     namespace = var.namespace
     labels    = local.dev_test_labels
      annotations = {
-      "kubernetes.io/ingress.class" = "nginx"
+      "cert-manager.io/cluster-issuer" = "selfsigned-issuer"
     }
   }
 
   spec {
 
     tls {
-      secret_name = var.tls_secret
+      secret_name = "dev-test-cert-tls"
       hosts       = ["${var.host_name}"]
     } 
 

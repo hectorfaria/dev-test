@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  labels:
-    app: dev-test
-    kubernetes.io/metadata.name: dev-test-ns
-    tier: backend
-  name: dev-test-ns
