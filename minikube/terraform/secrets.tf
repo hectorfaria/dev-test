@@ -1,13 +1,3 @@
-resource "kubernetes_secret" "dev-test-pass" {
-  metadata {
-    name      = "dev-test-pass"
-    namespace = var.namespace
-  }
-  data = {
-    password = "password"
-  }
-}
-
 resource "kubernetes_secret" "dev-test-tls" {
   metadata {
     name      = var.tls_secret

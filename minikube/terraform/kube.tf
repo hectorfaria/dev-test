@@ -40,19 +40,6 @@ resource "kubernetes_deployment" "dev-test-deploy" {
           port {
             container_port = var.image_port
           }
-          env {
-            name  = "DATABASE_USER"
-            value = "user"
-          }
-          env {
-            name = "DATABASE_PASSWORD"
-            value_from {
-              secret_key_ref {
-                name = "dev-test-pass"
-                key  = "password"
-              }
-            }
-          }
           resources {
             limits = {
               cpu    = "0.5"
@@ -82,10 +69,10 @@ resource "kubernetes_ingress_v1" "dev-test-ingress" {
 
   spec {
 
-    /* tls {
+    tls {
       secret_name = var.tls_secret
       hosts       = ["${var.host_name}"]
-    } */
+    } 
 
     rule {
       host = var.host_name
