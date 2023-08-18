@@ -93,12 +93,11 @@ resource "kubernetes_service" "dev-test-srv" {
   }
   spec {
     selector         = local.dev_test_labels
-    session_affinity = "ClientIP"
     port {
       port        = var.node_port
       target_port = var.image_port
     }
-    type = "LoadBalancer"
+    type = "NodePort"
   }
 }
 
