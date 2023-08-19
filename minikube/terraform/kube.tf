@@ -39,6 +39,7 @@ resource "kubernetes_deployment" "dev-test-deploy" {
           name  = "dev-test"
           port {
             container_port = var.image_port
+            target_port = var.image_port
           }
           resources {
             limits = {
@@ -73,7 +74,7 @@ resource "kubernetes_ingress_v1" "dev-test-ingress" {
             service {
               name = var.service_name
               port {
-                number = var.node_port
+                number = var.image_port
               }
             }
           }
@@ -94,7 +95,7 @@ resource "kubernetes_service" "dev-test-srv" {
   spec {
     selector         = local.dev_test_labels
     port {
-      port        = var.node_port
+      port        = var.image_port
       target_port = var.image_port
     }
     type = "NodePort"
