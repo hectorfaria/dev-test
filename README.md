@@ -21,10 +21,15 @@ I decided to use GitHub Actions since the requirements where to host the reposit
 ![imagen](https://github.com/hectorfaria/dev-test/assets/33832060/69e1cacf-d33d-4e7c-a800-1b9f069843a1)
 
 **Scan**: a simple NPM command that will scan for vulnerabilities and will stop committing if there is any.
+
 **Lint**: a simple code formatter to show clean and concise code.
+
 **Test** (Depends on Scan and Lint): A testing framework that will test the app if the app works properly. there will be an artifact uploaded with the results of the tests.
+
 **Docker** (Depends on Test): Once the app is functional we will upload it to DockerHub
+
 **Coverage** (Depends on Test): Once we did the test, we will print the coverage and it will be uploaded as an artifact with the results of the test.
+
 **Kubernetes** (Depends on Docker): Once we upload the image to Dockerhub, we will start a copy of minikube, build the metrics, install dependencies applying the files to the cluster and confirm the Cluster works without any issue.
 
 # Running the App
