@@ -96,10 +96,8 @@ jobs:
             docker build -f ./Dockerfile -t hectorfaria/dev-test:latest .
             echo -n "verifying images:"
             docker images         
-      - name: Enabling addons
-        run: |
-          minikube addons enable ingress
-          minikube addons enable metrics-server  
+      - name: Deploy the metrics server
+        run: kubectl apply -f https://raw.githubusercontent.com/pythianarora/total-practice/master/sample-kubernetes-code/metrics-server.yaml
       - name: Deploy the namespace
         run:
           kubectl apply -f minikube/namespace.yaml
@@ -114,5 +112,5 @@ jobs:
         run: |
             export SHELL=/bin/bash
             minikube service list
-            minikube service dev-test-srv --url
+            minikube service dev-test-srv --url -n=dev-test-ns
             curl dev-test.com
