@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app: dev-test
+    tier: backend
+  name: dev-test-ns

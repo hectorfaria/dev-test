@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: dev-test
+    tier: backend
+  name: dev-test-ingress
+  namespace: dev-test-ns
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: dev-test.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: dev-test-srv
+            port:
+              number: 8000
+        pathType: ImplementationSpecific

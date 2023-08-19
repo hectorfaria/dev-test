@@ -39,7 +39,6 @@ resource "kubernetes_deployment" "dev-test-deploy" {
           name  = "dev-test"
           port {
             container_port = var.image_port
-            target_port = var.image_port
           }
           resources {
             limits = {
@@ -66,6 +65,7 @@ resource "kubernetes_ingress_v1" "dev-test-ingress" {
   }
 
   spec {
+    ingress_class_name = "nginx"
     rule {
       host = var.host_name
       http {
@@ -78,8 +78,6 @@ resource "kubernetes_ingress_v1" "dev-test-ingress" {
               }
             }
           }
-
-          path = "/*"
         }
       }
     }
