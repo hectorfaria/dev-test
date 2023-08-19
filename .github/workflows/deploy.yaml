@@ -77,3 +77,42 @@ jobs:
         with:
           push: true
           tags: hectorfaria/dev-test:latest
+  kubernetes:
+    runs-on: ubuntu-latest
+    name: Deploying to minikube
+    needs: docker
+    steps:
+      - uses: actions/checkout@v2
+      - name: Start minikube
+        uses: medyagh/setup-minikube@master
+        with:
+          addons: metrics-server,ingress
+      - name: verify the minikube is working
+        run: kubectl get pods -A
+      - name: Build image
+        run: |
+            export SHELL=/bin/bash
+            eval $(minikube -p minikube docker-env)
+            docker build -f ./Dockerfile -t hectorfaria/dev-test:latest .
+            echo -n "verifying images:"
+            docker images         
+      - name: Enabling addons
+        run: |
+          minikube addons enable ingress
+          minikube addons enable metrics-server  
+      - name: Deploy the namespace
+        run:
+          kubectl apply -f minikube/namespace.yaml
+      - name: Deploying the rest of the files
+        run:
+          kubectl apply -f minikube/
+      - name: Adding minikube ip to the /etc/hosts
+        run: |
+          export SHELL=/bin/bash
+          echo "$(minikube ip) dev-test.com" | sudo tee -a /etc/hosts
+      - name: Test service URLs
+        run: |
+            export SHELL=/bin/bash
+            minikube service list
+            minikube service dev-test-srv --url
+            curl dev-test.com

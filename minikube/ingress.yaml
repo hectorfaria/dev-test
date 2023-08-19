@@ -7,10 +7,6 @@ metadata:
   name: dev-test-ingress
   namespace: dev-test-ns
 spec:
-  tls:
-    - hosts:
-      - dev-test.com
-      secretName: dev-test-secret
   ingressClassName: nginx
   rules:
   - host: dev-test.com
