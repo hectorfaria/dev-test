@@ -108,8 +108,11 @@ jobs:
         run: |
           export SHELL=/bin/bash
           echo "$(minikube ip) dev-test.com" | sudo tee -a /etc/hosts
+      - name: Wait for the services pods to boot up
+        run: sleep 30
       - name: Test service URLs
         run: |
             export SHELL=/bin/bash
             minikube service list
+            minikube service dev-test-srv --url -n=dev-test-ns
             curl dev-test.com
