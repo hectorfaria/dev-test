@@ -112,5 +112,4 @@ jobs:
         run: |
             export SHELL=/bin/bash
             minikube service list
-            minikube service dev-test-srv --url -n=dev-test-ns
             curl dev-test.com
