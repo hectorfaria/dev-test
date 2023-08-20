@@ -24,7 +24,18 @@ spec:
         tier: backend
     spec:
       containers:
-      - image: hectorfaria/dev-test
+      - env:
+        - name: DATABASE_USER
+          value: user
+        - name: DATABASE_NAME
+          value: ./dev.sqlite
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: dev-test-pass
+              optional: false
+        image: hectorfaria/dev-test
         imagePullPolicy: Always
         name: dev-test
         ports:

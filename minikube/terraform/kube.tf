@@ -40,6 +40,23 @@ resource "kubernetes_deployment" "dev-test-deploy" {
           port {
             container_port = var.image_port
           }
+          env {
+           name = "DATABASE_USER"
+           value = "user"
+          }
+          env {
+           name = "DATABASE_NAME"
+           value = "./dev.sqlite"
+          }
+          env {
+           name = "DATABASE_PASSWORD"
+           value_from {
+             secret_key_ref {
+               name = "dev-test-pass"
+               key = "password"
+             }
+           }
+          }
           resources {
             limits = {
               cpu    = "0.5"
