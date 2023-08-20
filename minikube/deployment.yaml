@@ -38,6 +38,18 @@ spec:
         image: hectorfaria/dev-test
         imagePullPolicy: Always
         name: dev-test
+        readinessProbe:
+          httpGet:
+            path: /api/users
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/users
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 30
         ports:
         - containerPort: 8000
           protocol: TCP
