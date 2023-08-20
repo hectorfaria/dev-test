@@ -64,6 +64,13 @@ Install the metrics-server
 kubectl apply -f https://raw.githubusercontent.com/pythianarora/total-practice/master/sample-kubernetes-code/metrics-server.yaml
 ```
 
+Add the TLS self signed certificate and make it a secret
+
+```bash
+openssl req -x509 -newkey rsa:4096 -sha256 -nodes -keyout tls.key -out tls.crt -subj "/CN=dev-test.com" -days 365
+kubectl create secret tls dev-test-tls --cert=tls.crt --key=tls.key
+```
+
 Apply the namespace
 
 ```bash
@@ -98,10 +105,10 @@ Alternatively with Windows (with PowerShell) I believe you can do something like
 echo "$(minikube ip) dev-test.com" | Tee-Object > C:\Windows\System32\drivers\etc\hosts
 ```
 
-You can either go to a browser (please be mindful of accepting http or accepting certificates) or try this command:
+You can either go to a browser (please be mindful of accepting certificates) or try this command:
 
 ```bash
-curl dev-test.com
+curl -k dev-test.com
 ```
 
 Alternatively minikube can give you an port for the service:
