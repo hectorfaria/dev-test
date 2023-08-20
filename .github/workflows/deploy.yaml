@@ -98,6 +98,11 @@ jobs:
             docker images         
       - name: Deploy the metrics server
         run: kubectl apply -f https://raw.githubusercontent.com/pythianarora/total-practice/master/sample-kubernetes-code/metrics-server.yaml
+      - name: create a TLS self signed certificate
+        run: | 
+          export SHELL=/bin/bash
+          openssl req -x509 -newkey rsa:4096 -sha256 -nodes -keyout tls.key -out tls.crt -subj "/CN=dev-test.com" -days 365
+          kubectl create secret tls dev-test-tls --cert=tls.crt --key=tls.key
       - name: Deploy the namespace
         run:
           kubectl apply -f minikube/namespace.yaml
@@ -115,4 +120,4 @@ jobs:
             export SHELL=/bin/bash
             minikube service list
             minikube service dev-test-srv --url -n=dev-test-ns
-            curl dev-test.com
+            curl -k https://dev-test.com
