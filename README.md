@@ -1,3 +1,5 @@
+[![Deployment](https://github.com/hectorfaria/dev-test/actions/workflows/deploy.yaml/badge.svg)](https://github.com/hectorfaria/dev-test/actions/workflows/deploy.yaml)
+
 # Introduction
 
 This is a test for Devsu LLC, the tools I used were Docker, GitHub Actions, NPM, eslint, minikube, metrics-server and terraform (optional)
